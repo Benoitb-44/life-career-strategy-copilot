@@ -30,6 +30,10 @@ cp .env.example .env
 Puis compléter les valeurs nécessaires.
 
 - `DATABASE_URL` est optionnelle ; par défaut, SQLite est utilisé : `sqlite:///./copilot.db`.
+- `LLM_MOCK` (optionnelle) : `true` pour activer un mode mock stable qui ne nécessite pas de clé OpenAI.
+- `OPENAI_API_KEY` est requise uniquement si `LLM_MOCK` est désactivé.
+- `LLM_TIMEOUT_S`, `LLM_RETRIES`, `LLM_MODEL` permettent d’ajuster le client LLM.
+
 
 ## Initialiser la base de données
 
@@ -62,3 +66,7 @@ Réponse attendue :
 ```json
 {"status":"ok"}
 ```
+
+## Prompts versionnés
+
+Les prompts sont stockés dans `app/prompts/` (ex: `system_prompt.md`) et chargés par `app/services/llm_client.py` via `run_prompt(prompt_name, input_json)`.

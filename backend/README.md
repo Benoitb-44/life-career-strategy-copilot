@@ -29,6 +29,16 @@ cp .env.example .env
 
 Puis compléter les valeurs nécessaires.
 
+- `DATABASE_URL` est optionnelle ; par défaut, SQLite est utilisé : `sqlite:///./copilot.db`.
+
+## Initialiser la base de données
+
+Depuis `backend/` :
+
+```bash
+python scripts/init_db.py
+```
+
 ## Lancer le serveur
 
 Depuis `backend/` :
@@ -36,6 +46,8 @@ Depuis `backend/` :
 ```bash
 uvicorn app.main:app --reload
 ```
+
+Au démarrage, les tables SQLModel sont créées automatiquement si elles n'existent pas.
 
 Application disponible sur : `http://127.0.0.1:8000`
 

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
+from app.api.context import router as context_router
 from app.db import create_db_and_tables
 
 app = FastAPI(title="Life Career Strategy Copilot API")
@@ -15,3 +16,6 @@ def on_startup() -> None:
 def health() -> dict[str, str]:
     _ = settings
     return {"status": "ok"}
+
+
+app.include_router(context_router)

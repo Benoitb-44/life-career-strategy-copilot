@@ -29,6 +29,7 @@ class CareerContext(SQLModel, table=True):
     primary_goal: str
     success_definition: str
     constraints: dict = Field(sa_column=Column(JSON, nullable=False))
+    horizon_days: Optional[int] = Field(default=None, nullable=True)
     updated_at: datetime = Field(default_factory=utcnow, nullable=False)
 
 

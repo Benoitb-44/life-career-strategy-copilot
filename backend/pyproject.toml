@@ -1,0 +1,14 @@
+[project]
+name = "life-career-strategy-copilot-backend"
+version = "0.1.0"
+description = "Minimal FastAPI backend for Life Career Strategy Copilot"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic-settings>=2.4.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

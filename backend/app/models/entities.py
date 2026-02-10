@@ -54,10 +54,12 @@ class Plan90Days(SQLModel, table=True):
 class ChecklistResult(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     plan_id: int = Field(foreign_key="plan90days.id", index=True)
-    goals_clear: bool = Field(default=False, nullable=False)
-    measurable_milestones: bool = Field(default=False, nullable=False)
-    realistic_scope: bool = Field(default=False, nullable=False)
-    has_risks_and_mitigations: bool = Field(default=False, nullable=False)
+    clarity: bool = Field(default=False, nullable=False)
+    focus: bool = Field(default=False, nullable=False)
+    actionability: bool = Field(default=False, nullable=False)
+    feasibility: bool = Field(default=False, nullable=False)
+    risk_awareness: bool = Field(default=False, nullable=False)
+    coherence: bool = Field(default=False, nullable=False)
     verdict: str
     feedback: str
     created_at: datetime = Field(default_factory=utcnow, nullable=False)

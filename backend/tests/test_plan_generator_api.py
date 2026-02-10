@@ -2,8 +2,8 @@ import pytest
 from fastapi import HTTPException
 from sqlmodel import SQLModel, Session, create_engine, select
 
-from app.api.plan import PlanGenerateRequest, generate_plan
-from app.models import Plan90Days, PlanStatus
+from app.api.plan import PlanGenerateRequest, evaluate_plan, generate_plan
+from app.models import ChecklistResult, Plan90Days, PlanStatus
 from app.services.plan_generator import (
     FORBIDDEN_DELIVERABLE_TERMS,
     _contains_forbidden_terms,
@@ -75,3 +75,47 @@ def test_generate_plan_persists_draft_plan(session: Session) -> None:
     assert stored.status == PlanStatus.draft
     assert set(stored.plan_json.keys()) == {"objective", "monthly_objectives", "kpis", "risks"}
     assert len(stored.plan_json["monthly_objectives"]) == 3
+
+
+def test_evaluate_plan_rejects_bad_plan_and_persists_checklist(session: Session) -> None:
+    bad_plan = Plan90Days(
+        user_id=1,
+        status=PlanStatus.draft,
+        plan_json={
+            "objective": "Trouver mieux",
+            "monthly_objectives": [{"month": 1, "objective": "vite", "deliverables": []}],
+            "kpis": [],
+            "risks": [],
+        },
+    )
+    session.add(bad_plan)
+    session.commit()
+    session.refresh(bad_plan)
+
+    response = evaluate_plan(bad_plan.id or 0, session)
+
+    assert response.verdict == "rejected"
+    assert response.status == PlanStatus.rejected
+    assert response.checklist_result_id > 0
+
+    stored_plan = session.get(Plan90Days, bad_plan.id)
+    assert stored_plan is not None
+    assert stored_plan.status == PlanStatus.rejected
+
+    checklist_results = session.exec(select(ChecklistResult)).all()
+    assert len(checklist_results) == 1
+    checklist = checklist_results[0]
+    assert checklist.verdict == "rejected"
+    assert not checklist.clarity
+    assert not checklist.coherence
+    assert "Plan rejeté" in checklist.feedback
+
+
+def test_evaluate_plan_never_returns_partial_verdict(session: Session) -> None:
+    request = _build_payload()
+    generated = generate_plan(request, session)
+
+    response = evaluate_plan(generated.plan_id, session)
+
+    assert response.verdict in {"approved", "rejected"}
+    assert response.verdict != "partial"

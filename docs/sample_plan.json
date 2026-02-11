@@ -1,0 +1,42 @@
+{
+  "objective": "Construire en 90 jours un dossier crédible de leadership produit stratégique sans compromettre la stabilité actuelle.",
+  "monthly_objectives": [
+    {
+      "month": 1,
+      "objective": "Clarifier le positionnement cible et sécuriser les sponsors internes.",
+      "deliverables": [
+        "Scorecard de rôle Head of Product (compétences, preuves, gaps)",
+        "3 entretiens de calibration avec leaders produit/sponsors",
+        "Roadmap personnelle 90 jours validée"
+      ]
+    },
+    {
+      "month": 2,
+      "objective": "Exécuter un projet à fort impact et visibilité transverse.",
+      "deliverables": [
+        "Projet stratégique cadré (problème, hypothèses, KPIs)",
+        "Rituels hebdomadaires avec parties prenantes clés",
+        "Point mi-parcours avec décisions documentées"
+      ]
+    },
+    {
+      "month": 3,
+      "objective": "Transformer les résultats en preuve de niveau senior leadership.",
+      "deliverables": [
+        "Bilan d'impact du projet (résultats business + apprentissages)",
+        "Narrative de promotion / mobilité interne prête",
+        "Plan des 90 jours suivants avec options de trajectoire"
+      ]
+    }
+  ],
+  "kpis": [
+    "3 sponsors actifs engagés avant la fin du mois 1",
+    "1 initiative stratégique livrée avec impact mesurable avant la fin du mois 3",
+    "2 opportunités concrètes de progression identifiées (interne ou externe)"
+  ],
+  "risks": [
+    "Surcharge opérationnelle qui réduit le temps stratégique",
+    "Manque d'alignement avec le management direct",
+    "Projet choisi trop faible en visibilité organisationnelle"
+  ]
+}

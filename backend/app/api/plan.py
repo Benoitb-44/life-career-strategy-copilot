@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.db import get_session
 from app.models import ChecklistResult, Plan90Days, PlanStatus, User
 from app.services.checklist import evaluate_plan_checklist
+from app.services.pdf_export import generate_plan_pdf
 from app.services.plan_generator import generate_plan_90_days
 
 router = APIRouter(tags=["plan"])
@@ -111,4 +112,31 @@ def evaluate_plan(
         checklist_result_id=checklist_result.id or 0,
         verdict=checklist_result.verdict,
         feedback=checklist_result.feedback,
+    )
+
+
+@router.get("/plan/{plan_id}/export.pdf")
+def export_plan_pdf(
+    plan_id: int,
+    session: Session = Depends(get_session),
+) -> Response:
+    plan = session.get(Plan90Days, plan_id)
+    if plan is None:
+        raise HTTPException(status_code=404, detail="Plan introuvable.")
+
+    if plan.status != PlanStatus.approved:
+        raise HTTPException(status_code=403, detail="Export PDF autorisé uniquement pour un plan approuvé.")
+
+    checklist_result = session.exec(
+        select(ChecklistResult)
+        .where(ChecklistResult.plan_id == plan_id)
+        .order_by(ChecklistResult.created_at.desc(), ChecklistResult.id.desc())
+    ).first()
+
+    pdf_payload = generate_plan_pdf(plan.plan_json, checklist_result)
+    filename = f"plan-{plan_id}-decision-grade.pdf"
+    return Response(
+        content=pdf_payload,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )

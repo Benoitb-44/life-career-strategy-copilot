@@ -10,6 +10,7 @@ dependencies = [
     "sqlmodel>=0.0.22",
     "openai>=1.52.0",
     "pytest>=8.0.0",
+    "reportlab>=4.0.0",
 ]
 
 [build-system]

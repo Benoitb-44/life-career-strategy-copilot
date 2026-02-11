@@ -1,0 +1,12 @@
+{
+  "entryAnswer": "Je suis Senior Product Manager dans la même entreprise depuis 6 ans. J'ai envie d'évoluer vers un rôle Head of Product à horizon 12-18 mois, mais je manque de visibilité stratégique et je suis trop absorbé par l'opérationnel. J'ai 8 heures par semaine à investir et une contrainte forte: ne pas perdre en stabilité financière.",
+  "goal": {
+    "northStar": "Obtenir une trajectoire crédible vers un poste Head of Product en 12-18 mois, avec des preuves de leadership stratégique.",
+    "constraints": "8h/semaine disponibles; stabilité financière non négociable; pas de déménagement sur les 12 prochains mois."
+  },
+  "selectedOption": {
+    "id": "option-3",
+    "title": "Portfolio approach",
+    "description": "Conserver le poste actuel tout en construisant un projet stratégique visible pour démontrer le niveau Head of Product."
+  }
+}

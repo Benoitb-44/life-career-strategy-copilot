@@ -17,3 +17,22 @@ A decision-grade 90-day career strategy PDF.
 ## Why it matters
 Bad career decisions are costly.
 This product optimizes for clarity, not advice.
+
+## Lancement en développement avec Docker Compose
+
+Depuis la racine du dépôt :
+
+```bash
+docker compose up
+```
+
+Cette commande lance :
+
+- `backend` : FastAPI avec `uvicorn` sur `http://localhost:8000`
+- `frontend` : Next.js en mode dev sur `http://localhost:3000`
+
+Arrêter les services :
+
+```bash
+docker compose down
+```
